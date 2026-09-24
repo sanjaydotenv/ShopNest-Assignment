@@ -18,8 +18,11 @@ const userSchema = mongoose.Schema({
     type: String,
     required: true,
   },
+  refreshToken: {
+    type: String,
+  },
 });
 
-const userModel = mongoose.model("Users" , userSchema)
+const userModel = mongoose.model("Users", userSchema);
 
-export default userModel
+export default userModel;

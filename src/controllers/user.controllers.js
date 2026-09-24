@@ -1,10 +1,14 @@
 import userModel from "../models/user.model.js";
 import bcrypt from "bcryptjs";
+import {
+  generateAccessToken,
+  generateRefreshToken,
+} from "../utils/user.utils.js";
 
 const userRegisterController = async (req, res) => {
   const { name, email, password, confirmPassword } = req.body;
 
-  const isAlreadyExists = await userModel.fineOne({
+  const isAlreadyExists = await userModel.findOne({
     email,
   });
 
@@ -20,8 +24,8 @@ const userRegisterController = async (req, res) => {
     });
   }
 
-  const hashPassword = bcrypt.hash(password, 12);
-  const hashConfirmPassword = bcrypt.hash(confirmPassword, 12);
+  const hashPassword = await bcrypt.hash(password, 12);
+  const hashConfirmPassword = await bcrypt.hash(confirmPassword, 12);
 
   const user = await userModel.create({
     name,
@@ -36,9 +40,26 @@ const userRegisterController = async (req, res) => {
     });
   }
 
-  
+  const refreshToken = generateRefreshToken(user._id);
 
+  console.log(refreshToken)
 
+  await userModel.findByIdAndUpdate(user._id, {
+    refreshToken,
+  });
+
+  res.cookie("refreshToken", refreshToken);
+
+  res.status(201).json({
+    message: "User registered successfully",
+    data: {
+      user: {
+        id: user._id,
+        name: user.name,
+        email: user.email,
+      },
+    },
+  });
 };
 
 export default {

@@ -8,7 +8,7 @@ export const generateAccessToken = (userID) => {
     });
   }
 
-  const accessToken = jwt.sign(userID, config.JWT_ACCESS_TOKEN_SECRET, {
+  const accessToken = jwt.sign({ userID }, config.JWT_ACCESS_TOKEN_SECRET, {
     expiresIn: "15Min",
   });
 
@@ -16,13 +16,14 @@ export const generateAccessToken = (userID) => {
 };
 
 export const generateRefreshToken = (userID) => {
+  console.log(userID);
   if (!userID) {
     return res.status(404).json({
       message: "userID is required for creating refreshToken",
     });
   }
 
-  const refreshToken = jwt.sign(userID, config.JWT_REFRESH_TOKEN_SECRET, {
+  const refreshToken = jwt.sign({ userID }, config.JWT_REFRESH_TOKEN_SECRET, {
     expiresIn: "7Days",
   });
 
