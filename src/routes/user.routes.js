@@ -1,7 +1,10 @@
 import { Router } from "express";
 
 // import userControllers
-import userControllers from "../controllers/user.controllers";
+import userControllers from "../controllers/user.controllers.js";
+
+// import validator
+import { registerValidator } from "../validators/auth.validator.js";
 
 const route = Router();
 
@@ -10,6 +13,10 @@ const route = Router();
  * @Public Yes
  * @body {name , email , password , confirmPassword}
  */
-route.post("/register", userControllers.userRegisterController);
+route.post(
+  "/register",
+  registerValidator,
+  userControllers.userRegisterController,
+);
 
 export default route;
