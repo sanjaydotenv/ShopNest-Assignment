@@ -42,7 +42,7 @@ const userRegisterController = async (req, res) => {
 
   const refreshToken = generateRefreshToken(user._id);
 
-  console.log(refreshToken)
+  console.log(refreshToken);
 
   await userModel.findByIdAndUpdate(user._id, {
     refreshToken,
@@ -62,6 +62,53 @@ const userRegisterController = async (req, res) => {
   });
 };
 
+const userLoginController = async (req, res) => {
+  const { email, password } = req.body;
+
+  const isUserExists = await userModel.findOne({ email });
+
+  if (!isUserExists) {
+    return res.status(401).json({
+      message: "Enter a valid email or password",
+    });
+  }
+
+  const isPasswordValid = await bcrypt.compare(password, isUserExists.password);
+
+  if (!isPasswordValid) {
+    return res.status(401).json({
+      message: "Enter a valid email or password",
+    });
+  }
+
+  const accessToken = generateAccessToken(isUserExists._id);
+  const refreshToken = generateRefreshToken(isUserExists._id);
+
+  await userModel.findByIdAndUpdate(isUserExists._id, {
+    refreshToken,
+  });
+
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+  });
+
+  res.status(200).json({
+    message: "User login successfully",
+    data: {
+      user: {
+        id: isUserExists._id,
+        name: isUserExists.name,
+        email: isUserExists.email,
+      },
+      accessToken,
+    },
+  });
+};
+
+
+
+
 export default {
   userRegisterController,
+  userLoginController,
 };

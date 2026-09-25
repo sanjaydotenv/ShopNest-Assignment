@@ -4,7 +4,7 @@ import { Router } from "express";
 import userControllers from "../controllers/user.controllers.js";
 
 // import validator
-import { registerValidator } from "../validators/auth.validator.js";
+import { loginValidator, registerValidator } from "../validators/auth.validator.js";
 
 const route = Router();
 
@@ -25,6 +25,6 @@ route.post(
  * @body {email , password}
  */
 
-route.post("/login" , )
+route.post("/login" , loginValidator , userControllers.userLoginController)
 
 export default route;
