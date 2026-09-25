@@ -4,7 +4,13 @@ import { Router } from "express";
 import userControllers from "../controllers/user.controllers.js";
 
 // import validator
-import { loginValidator, registerValidator } from "../validators/auth.validator.js";
+import {
+  loginValidator,
+  registerValidator,
+} from "../validators/auth.validator.js";
+
+// import middleware
+import { authenticate } from "../middlewares/auth.middleware.js";
 
 const route = Router();
 
@@ -25,6 +31,17 @@ route.post(
  * @body {email , password}
  */
 
-route.post("/login" , loginValidator , userControllers.userLoginController)
+route.post("/login", loginValidator, userControllers.userLoginController);
+
+/**
+ * @POST http://localhost:3000/api/auth/refresh-token
+ * @Public Yes
+ * @cookies refreshToken
+ */
+
+route.post(
+  "/refresh-token",
+  userControllers.getNewAccessTokenViaRefreshTokenController,
+);
 
 export default route;

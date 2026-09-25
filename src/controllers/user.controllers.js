@@ -4,6 +4,8 @@ import {
   generateAccessToken,
   generateRefreshToken,
 } from "../utils/user.utils.js";
+import { config } from "../config/config.js";
+import jwt from "jsonwebtoken"
 
 const userRegisterController = async (req, res) => {
   const { name, email, password, confirmPassword } = req.body;
@@ -105,10 +107,85 @@ const userLoginController = async (req, res) => {
   });
 };
 
+const getNewAccessTokenViaRefreshTokenController = async (req, res) => {
+  try {
+    const refreshToken = req.cookies.refreshToken;
 
+    if (!refreshToken) {
+      return res.status(401).json({
+        message: "Refresh token not found. Please login again",
+      });
+    }
 
+    console.log(refreshToken)
+
+    let decoded;
+
+    try {
+      decoded = jwt.verify(refreshToken, config.JWT_REFRESH_TOKEN_SECRET);
+    } catch (error) {
+      res.clearCookie("refreshToken");
+
+      return res.status(401).json({
+        message: "Invalid or expired refresh token. Please login again",
+      });
+    }
+
+    const user = await userModel.findById(decoded.userID);
+
+    if (!user) {
+      res.clearCookie("refreshToken");
+
+      return res.status(401).json({
+        message: "User not found. Please login again",
+      });
+    }
+
+    if (user.refreshToken !== refreshToken) {
+      user.refreshToken = null;
+      await user.save();
+
+      res.clearCookie("refreshToken");
+
+      return res.status(403).json({
+        message: "Invalid or reused refresh token. Please login again",
+      });
+    }
+
+    const accessToken = generateAccessToken(user._id);
+
+    const newRefreshToken = generateRefreshToken(user._id);
+
+    await userModel.findByIdAndUpdate(user._id, {
+      refreshtoken: newRefreshToken,
+    });
+
+    res.cookie("refreshToken", newRefreshToken, {
+      httpOnly: true,
+    });
+
+    return res.status(200).json({
+      message: "New access token generated",
+      data: {
+        user: {
+          id: user._id,
+          name: user.name,
+          email: user.email,
+        },
+        accessToken,
+      },
+    });
+  } catch (error) {
+    console.error(error);
+
+    return res.status(500).json({
+      message: "Internal server error",
+    });
+  }
+};
 
 export default {
   userRegisterController,
   userLoginController,
+  getNewAccessTokenViaRefreshTokenController,
 };
