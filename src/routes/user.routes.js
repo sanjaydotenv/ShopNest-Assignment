@@ -19,4 +19,12 @@ route.post(
   userControllers.userRegisterController,
 );
 
+/**
+ * @POST http://localhost:3000/api/auth/login
+ * @Public Yes
+ * @body {email , password}
+ */
+
+route.post("/login" , )
+
 export default route;

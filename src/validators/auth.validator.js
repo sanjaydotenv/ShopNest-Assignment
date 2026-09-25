@@ -70,4 +70,24 @@ export const registerValidator = [
   },
 ];
 
+export const loginValidator = [
+  body("email")
+    .exists()
+    .withMessage("Email is required")
+    .bail()
+    .isString()
+    .withMessage("Email must be a string")
+    .bail()
+    .isEmail()
+    .withMessage("Enter a valid email address"),
 
+  body("password")
+    .exists()
+    .withMessage("Password is required")
+    .bail()
+    .isString()
+    .withMessage("Password must be a string")
+    .bail()
+    .notEmpty()
+    .withMessage("Password cannot be empty"),
+];
