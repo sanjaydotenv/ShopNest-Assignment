@@ -185,7 +185,6 @@ const getNewAccessTokenViaRefreshTokenController = async (req, res) => {
 };
 
 const userLogoutController = async (req, res) => {
-  console.log(req.user._id)
   await userModel.findByIdAndUpdate(req.user.userID, {
     refreshToken: null,
   });
@@ -197,9 +196,19 @@ const userLogoutController = async (req, res) => {
   });
 };
 
+const getMeController = async (req, res) => {
+  const user = await userModel.findById(req.user.userID);
+
+  res.status(200).json({
+    message: "User fetched successfully",
+    data: { user: { id: user._id, name: user.name, email: user.email } },
+  });
+};
+
 export default {
   userRegisterController,
   userLoginController,
   getNewAccessTokenViaRefreshTokenController,
   userLogoutController,
+  getMeController
 };

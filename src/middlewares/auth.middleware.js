@@ -14,7 +14,6 @@ export const authenticate = (req, res, next) => {
 
     const decoded = jwt.verify(refreshToken, config.JWT_ACCESS_TOKEN_SECRET);
 
-    console.log(decoded)
 
     req.user = decoded;
 

@@ -47,8 +47,18 @@ route.post(
 /**
  * @POST http://loclhost:3000/api/auth/logout
  * @Public No
+ * @Headers accessToken
  */
 
 route.post("/logout", authenticate ,userControllers.userLogoutController)
+
+
+/**
+ * @POST http:/localhost:3000/api/auth/me
+ * @public No
+ * @Headers accessToken
+ */
+
+route.get("/me" , authenticate , userControllers.getMeController)
 
 export default route;
