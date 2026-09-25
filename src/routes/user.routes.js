@@ -44,4 +44,11 @@ route.post(
   userControllers.getNewAccessTokenViaRefreshTokenController,
 );
 
+/**
+ * @POST http://loclhost:3000/api/auth/logout
+ * @Public No
+ */
+
+route.post("/logout", authenticate ,userControllers.userLogoutController)
+
 export default route;

@@ -5,7 +5,7 @@ import {
   generateRefreshToken,
 } from "../utils/user.utils.js";
 import { config } from "../config/config.js";
-import jwt from "jsonwebtoken"
+import jwt from "jsonwebtoken";
 
 const userRegisterController = async (req, res) => {
   const { name, email, password, confirmPassword } = req.body;
@@ -117,7 +117,7 @@ const getNewAccessTokenViaRefreshTokenController = async (req, res) => {
       });
     }
 
-    console.log(refreshToken)
+    console.log(refreshToken);
 
     let decoded;
 
@@ -184,8 +184,22 @@ const getNewAccessTokenViaRefreshTokenController = async (req, res) => {
   }
 };
 
+const userLogoutController = async (req, res) => {
+  console.log(req.user._id)
+  await userModel.findByIdAndUpdate(req.user.userID, {
+    refreshToken: null,
+  });
+
+  res.clearCookie("refreshToken");
+
+  res.status(200).json({
+    message: "user logout successfully",
+  });
+};
+
 export default {
   userRegisterController,
   userLoginController,
   getNewAccessTokenViaRefreshTokenController,
+  userLogoutController,
 };
