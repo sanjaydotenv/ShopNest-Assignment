@@ -1,9 +1,13 @@
 import { Router } from "express";
+import multer, { memoryStorage } from "multer";
 
-const route = Router()
+const route = Router();
 
 //import product controlleer
-import productControllers from "../controllers/product.controllers";
+import productControllers from "../controllers/product.controllers.js";
+import { createProductValidator } from "../validators/product.validator.js";
+
+const upload = multer({ storage: memoryStorage() });
 
 /**
  * @POST http://localhost:3000/api/products
@@ -11,6 +15,11 @@ import productControllers from "../controllers/product.controllers";
  * @body {title , price , image}
  */
 
-route.post("/" , productControllers.createProductController)
+route.post(
+  "/",
+  createProductValidator,
+  upload.single("image"),
+  productControllers.createProductController,
+);
 
-export default route
+export default route;
