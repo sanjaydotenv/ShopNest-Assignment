@@ -34,4 +34,43 @@ const createProductController = async (req, res) => {
   });
 };
 
-export default { createProductController };
+const listAllProductsController = async (req, res) => {
+  const products = await productModel.find();
+
+  res.status(200).json({
+    message: "all product fetch successfully",
+    data: {
+      products,
+    },
+  });
+};
+
+const getSingleProductController = async (req, res) => {
+  const { productID } = req.params;
+
+  if (!productID) {
+    return res.status(401).json({
+      message: "ProductId id required",
+    });
+  }
+
+  const product = await productModel.findById(productID);
+
+  res.status(200).json({
+    message: "Single product fetch successfully",
+    data: {
+      product,
+    },
+  });
+};
+
+const updateProductController = async (req,res) => {
+
+}
+
+export default {
+  createProductController,
+  listAllProductsController,
+  getSingleProductController,
+  updateProductController
+};
