@@ -56,6 +56,12 @@ const getSingleProductController = async (req, res) => {
 
   const product = await productModel.findById(productID);
 
+  if (!product) {
+    return res.status(400).json({
+      message: "product not found",
+    });
+  }
+
   res.status(200).json({
     message: "Single product fetch successfully",
     data: {
@@ -120,9 +126,43 @@ const updateProductController = async (req, res) => {
   });
 };
 
+const deleteProductController = async (req, res) => {
+  try {
+    const { productID } = req.params;
+
+    if (!productID) {
+      return res.status(400).json({
+        success: false,
+        message: "Product ID is required",
+      });
+    }
+
+    const deletedProduct = await productModel.findByIdAndDelete(productID);
+
+    if (!deletedProduct) {
+      return res.status(404).json({
+        success: false,
+        message: "Product not found",
+      });
+    }
+
+    return res.status(200).json({
+      success: true,
+      message: "Product deleted successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      success: false,
+      message: "Failed to delete product",
+      error: error.message,
+    });
+  }
+};
+
 export default {
   createProductController,
   listAllProductsController,
   getSingleProductController,
   updateProductController,
+  deleteProductController,
 };
