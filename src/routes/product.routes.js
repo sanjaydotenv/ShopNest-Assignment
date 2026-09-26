@@ -5,7 +5,11 @@ const route = Router();
 
 //import product controlleer
 import productControllers from "../controllers/product.controllers.js";
-import { createProductValidator } from "../validators/product.validator.js";
+import {
+  createProductValidator,
+  updateProductValidator,
+  validate,
+} from "../validators/product.validator.js";
 
 const upload = multer({ storage: memoryStorage() });
 
@@ -17,8 +21,8 @@ const upload = multer({ storage: memoryStorage() });
 
 route.post(
   "/",
-  createProductValidator,
   upload.single("image"),
+  createProductValidator,
   productControllers.createProductController,
 );
 
@@ -43,6 +47,12 @@ route.get("/:productID", productControllers.getSingleProductController);
  * @productID
  */
 
-route.put("/:productID", productControllers.updateProductController);
+route.put(
+  "/:productID",
+  upload.single("image"),
+  updateProductValidator,
+  validate,
+  productControllers.updateProductController,
+);
 
 export default route;

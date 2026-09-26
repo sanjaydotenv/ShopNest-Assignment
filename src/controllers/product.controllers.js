@@ -64,13 +64,65 @@ const getSingleProductController = async (req, res) => {
   });
 };
 
-const updateProductController = async (req,res) => {
+const updateProductController = async (req, res) => {
+  const { title, price } = req.body;
+  const { productID } = req.params;
+  const file = req.file;
 
-}
+  if (!productID) {
+    return res.status(400).json({
+      success: false,
+      message: "Product ID is required",
+    });
+  }
+
+  const product = await productModel.findById(productID);
+
+  if (!product) {
+    return res.status(404).json({
+      success: false,
+      message: "Product not found",
+    });
+  }
+
+  const updateData = {};
+
+  if (title !== undefined) {
+    updateData.title = title;
+  }
+
+  if (price !== undefined) {
+    updateData.price = price;
+  }
+
+  if (file) {
+    const imageKitResponse = await uploadFileOnImageKit(
+      file.buffer,
+      file.originalname,
+    );
+
+    updateData.image = imageKitResponse.url;
+  }
+
+  const updatedProduct = await productModel.findByIdAndUpdate(
+    productID,
+    { $set: updateData },
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
+
+  return res.status(200).json({
+    success: true,
+    message: "Product updated successfully",
+    data: { product: updatedProduct },
+  });
+};
 
 export default {
   createProductController,
   listAllProductsController,
   getSingleProductController,
-  updateProductController
+  updateProductController,
 };
