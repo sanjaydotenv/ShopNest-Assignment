@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router";
 import AuthLayout from "../layouts/AuthLayout";
 import Regsiter from "../features/shopnest/ui/pages/Regsiter";
@@ -10,8 +10,25 @@ import Products from "../features/shopnest/ui/pages/Products";
 import AddProduct from "../features/shopnest/ui/pages/AddProduct";
 import EditProduct from "../features/shopnest/ui/pages/EditProduct";
 import Profile from "../features/shopnest/ui/pages/Profile";
+import { refreshToken } from "../features/shopnest/api/authApi";
+import { useDispatch, useSelector } from "react-redux";
+import { hydrateUser } from "../features/shopnest/state/authSlice";
 
 const App = () => {
+  const dispatch = useDispatch();
+  const data = useSelector((state) => state.auth);
+  console.log(data);
+
+  const hydrate = async () => {
+    const response = await refreshToken();
+
+    dispatch(hydrateUser(response.data.data));
+  };
+
+  useEffect(() => {
+    hydrate();
+  }, []);
+
   const router = createBrowserRouter([
     {
       path: "/auth",
@@ -49,12 +66,12 @@ const App = () => {
         },
         {
           path: "editProduct",
-          element: <EditProduct />
+          element: <EditProduct />,
         },
         {
           path: "profile",
-          element: <Profile />
-        }
+          element: <Profile />,
+        },
       ],
     },
   ]);

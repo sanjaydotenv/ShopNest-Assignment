@@ -24,6 +24,7 @@ export const useAuthHook = () => {
   const handleChangeLogin = async (data) => {
     const response = await loginAPI(data);
 
+
     dispatch(loginUser(response.data.data));
     navigate("/products");
   };

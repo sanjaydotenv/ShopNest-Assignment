@@ -7,7 +7,28 @@ export const registerAPI = async (data) => {
 };
 
 export const loginAPI = async (data) => {
+  console.log(data);
   const loginResponse = await axiosInstance.post("/api/auth/login", data);
 
   return loginResponse;
+};
+
+export const refreshToken = async () => {
+  const refreshResponse = await axiosInstance.post("/api/auth/refresh-token");
+
+  return refreshResponse;
+};
+
+export const getMeProfile = async (accessToken) => {
+  const profileResponse = await axiosInstance.get(
+    "/api/auth/me",
+    {},
+    {
+      headers: {
+        authorization: `Bearer ${accessToken}`,
+      },
+    },
+  );
+
+  return profileResponse;
 };

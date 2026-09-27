@@ -5,6 +5,7 @@ import DeleteProductModal from "../components/DeleteProductModal ";
 import { useSelector } from "react-redux";
 import { Navigate } from "react-router";
 import { toast } from "react-toastify";
+import ProductSkeleton from "../components/ProductSkeleton ";
 
 const products = [
   {
@@ -59,15 +60,17 @@ const products = [
 
 export default function ProductsPage() {
   const { navigate } = useAuthHook();
-  const { isAuthenticate } = useSelector((state) => state.auth);
+  const { isAuthenticate, loading } = useSelector((state) => state.auth);
+  const [isShow, setisShow] = useState(false);
 
-  console.log(isAuthenticate)
+  if (loading) {
+    return <ProductSkeleton />;
+  }
+
   if (!isAuthenticate) {
     toast.warn("Please register Or login first");
     return <Navigate to={"/"} />;
   }
-
-  const [isShow, setisShow] = useState(false);
 
   return (
     <div>
