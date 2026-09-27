@@ -2,6 +2,8 @@ import { useState } from "react";
 import { useAuthHook } from "../../hooks/authHook";
 import AsideNavigate from "../components/AsideNavigate";
 import DeleteProductModal from "../components/DeleteProductModal ";
+import {useSelector} from "react-redux"
+import { Navigate } from "react-router";
 
 const products = [
   {
@@ -54,16 +56,13 @@ const products = [
   },
 ];
 
-const navItems = [
-  { label: "Home", icon: "⌂", active: true },
-  { label: "Products", icon: "▦" },
-  { label: "Add Product", icon: "+" },
-  { label: "Profile", icon: "♙" },
-  { label: "Logout", icon: "↪" },
-];
-
 export default function ProductsPage() {
   const { navigate } = useAuthHook();
+  const {isAuthenticate} = useSelector(state => state.auth)
+
+  if (!isAuthenticate) {
+    return <Navigate to={"/"} />
+  }
 
   const [isShow, setisShow] = useState(false);
 
