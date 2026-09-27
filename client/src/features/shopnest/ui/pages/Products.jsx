@@ -2,8 +2,9 @@ import { useState } from "react";
 import { useAuthHook } from "../../hooks/authHook";
 import AsideNavigate from "../components/AsideNavigate";
 import DeleteProductModal from "../components/DeleteProductModal ";
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux";
 import { Navigate } from "react-router";
+import { toast } from "react-toastify";
 
 const products = [
   {
@@ -58,10 +59,12 @@ const products = [
 
 export default function ProductsPage() {
   const { navigate } = useAuthHook();
-  const {isAuthenticate} = useSelector(state => state.auth)
+  const { isAuthenticate } = useSelector((state) => state.auth);
 
+  console.log(isAuthenticate)
   if (!isAuthenticate) {
-    return <Navigate to={"/"} />
+    toast.warn("Please register Or login first");
+    return <Navigate to={"/"} />;
   }
 
   const [isShow, setisShow] = useState(false);

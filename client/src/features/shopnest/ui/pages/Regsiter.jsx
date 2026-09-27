@@ -2,7 +2,8 @@ import { User, Mail, LockKeyhole } from "lucide-react";
 import { useAuthHook } from "../../hooks/authHook";
 
 const Register = () => {
-  const { navigate } = useAuthHook();
+  const { navigate, register, handleSubmit, errors, handleChange } =
+    useAuthHook();
 
   return (
     <div
@@ -57,8 +58,9 @@ const Register = () => {
           </p>
         </div>
 
-        <form className="space-y-5">
-          {/* Full Name */}
+        <form onSubmit={handleSubmit(handleChange)} className="space-y-5">
+          {/* ================= FULL NAME ================= */}
+
           <div>
             <label
               className="block mb-2 text-sm font-semibold"
@@ -75,18 +77,31 @@ const Register = () => {
               />
 
               <input
+                {...register("name", {
+                  required: "Full name is required",
+                })}
                 type="text"
                 placeholder="Enter your full name"
                 className="w-full h-[52px] rounded-xl bg-white pl-12 pr-4 outline-none transition"
                 style={{
-                  border: "1px solid var(--border)",
+                  border: `1px solid ${
+                    errors.name ? "var(--danger)" : "var(--border)"
+                  }`,
                   color: "var(--text-primary)",
                 }}
               />
             </div>
+
+            {/* Error */}
+            {errors.name && (
+              <p className="text-xs mt-1.5" style={{ color: "var(--danger)" }}>
+                {errors.name.message}
+              </p>
+            )}
           </div>
 
-          {/* Email */}
+          {/* ================= EMAIL ================= */}
+
           <div>
             <label
               className="block mb-2 text-sm font-semibold"
@@ -103,18 +118,36 @@ const Register = () => {
               />
 
               <input
+                {...register("email", {
+                  required: "Email address is required",
+
+                  pattern: {
+                    value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                    message: "Please enter a valid email address",
+                  },
+                })}
                 type="email"
                 placeholder="Enter your email"
                 className="w-full h-[52px] rounded-xl bg-white pl-12 pr-4 outline-none transition"
                 style={{
-                  border: "1px solid var(--border)",
+                  border: `1px solid ${
+                    errors.email ? "var(--danger)" : "var(--border)"
+                  }`,
                   color: "var(--text-primary)",
                 }}
               />
             </div>
+
+            {/* Error */}
+            {errors.email && (
+              <p className="text-xs mt-1.5" style={{ color: "var(--danger)" }}>
+                {errors.email.message}
+              </p>
+            )}
           </div>
 
-          {/* Password */}
+          {/* ================= PASSWORD ================= */}
+
           <div>
             <label
               className="block mb-2 text-sm font-semibold"
@@ -131,18 +164,36 @@ const Register = () => {
               />
 
               <input
+                {...register("password", {
+                  required: "Password is required",
+
+                  minLength: {
+                    value: 6,
+                    message: "Password must be at least 6 characters",
+                  },
+                })}
                 type="password"
                 placeholder="Enter your password"
                 className="w-full h-[52px] rounded-xl bg-white pl-12 pr-4 outline-none transition"
                 style={{
-                  border: "1px solid var(--border)",
+                  border: `1px solid ${
+                    errors.password ? "var(--danger)" : "var(--border)"
+                  }`,
                   color: "var(--text-primary)",
                 }}
               />
             </div>
+
+            {/* Error */}
+            {errors.password && (
+              <p className="text-xs mt-1.5" style={{ color: "var(--danger)" }}>
+                {errors.password.message}
+              </p>
+            )}
           </div>
 
-          {/* Confirm Password */}
+          {/* ================= CONFIRM PASSWORD ================= */}
+
           <div>
             <label
               className="block mb-2 text-sm font-semibold"
@@ -159,21 +210,34 @@ const Register = () => {
               />
 
               <input
+                {...register("confirmPassword", {
+                  required: "Please confirm your password",
+                })}
                 type="password"
                 placeholder="Confirm your password"
                 className="w-full h-[52px] rounded-xl bg-white pl-12 pr-4 outline-none transition"
                 style={{
-                  border: "1px solid var(--border)",
+                  border: `1px solid ${
+                    errors.confimPassword ? "var(--danger)" : "var(--border)"
+                  }`,
                   color: "var(--text-primary)",
                 }}
               />
             </div>
+
+            {/* Error */}
+            {errors.confimPassword && (
+              <p className="text-xs mt-1.5" style={{ color: "var(--danger)" }}>
+                {errors.confimPassword.message}
+              </p>
+            )}
           </div>
 
-          {/* Register Button */}
+          {/* ================= REGISTER BUTTON ================= */}
+
           <button
-            type="button"
-            className="w-full h-[53px] rounded-xl text-white font-semibold transition"
+            type="submit"
+            className="w-full h-[53px] rounded-xl text-white font-semibold cursor-pointer active:scale-110 transition duration-75"
             style={{
               backgroundColor: "var(--btn-primary)",
               boxShadow: "var(--shadow-sm)",

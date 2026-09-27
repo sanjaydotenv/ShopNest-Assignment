@@ -10,10 +10,14 @@ const authSlice = createSlice({
   name: "AuthUser",
   initialState,
   reducers: {
-    register: (state, action) => {},
+    registerUser: (state, action) => {
+      console.log("running")
+      state.user = action.payload;
+      state.isAuthenticate = true;
+    },
   },
 });
 
-export const { register } = authSlice.actions;
+export const { registerUser } = authSlice.actions;
 
 export default authSlice.reducer;
