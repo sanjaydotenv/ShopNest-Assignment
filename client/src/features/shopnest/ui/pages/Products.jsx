@@ -1,359 +1,317 @@
-import {
-  Search,
-  ShoppingCart,
-  Heart,
-  SlidersHorizontal,
-  Star,
-} from "lucide-react";
 import { useAuthHook } from "../../hooks/authHook";
+import AsideNavigate from "../components/AsideNavigate";
 
 const products = [
   {
-    id: 1,
-    title: "Wireless Headphones",
-    category: "Electronics",
-    price: 2499,
-    rating: 4.8,
-    image:
-      "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=700&q=80",
+    name: "Nike Air Max",
+    price: "₹4,999",
+    image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=500",
+    tag: "Featured",
   },
   {
-    id: 2,
-    title: "Premium Smart Watch",
-    category: "Electronics",
-    price: 3299,
-    rating: 4.7,
-    image:
-      "https://images.unsplash.com/photo-1523275335684-37898b6baf30?auto=format&fit=crop&w=700&q=80",
+    name: "Sony Headphones",
+    price: "₹7,999",
+    image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=500",
+    tag: "Best Seller",
   },
   {
-    id: 3,
-    title: "Minimal Backpack",
-    category: "Fashion",
-    price: 1499,
-    rating: 4.6,
-    image:
-      "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=700&q=80",
+    name: "Apple Watch",
+    price: "₹24,999",
+    image: "https://images.unsplash.com/photo-1551816230-ef5deaed4a26?w=500",
+    tag: "Featured",
   },
   {
-    id: 4,
-    title: "Running Shoes",
-    category: "Footwear",
-    price: 2199,
-    rating: 4.8,
-    image:
-      "https://images.unsplash.com/photo-1542291026-7eec264c27ff?auto=format&fit=crop&w=700&q=80",
+    name: "Laptop Backpack",
+    price: "₹1,999",
+    image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=500",
+    tag: "Popular",
   },
   {
-    id: 5,
-    title: "Classic Sunglasses",
-    category: "Fashion",
-    price: 999,
-    rating: 4.5,
-    image:
-      "https://images.unsplash.com/photo-1511499767150-a48a237f0083?auto=format&fit=crop&w=700&q=80",
+    name: "iPhone 14",
+    price: "₹59,999",
+    image: "https://images.unsplash.com/photo-1592286927505-2fd0c3d0e8e4?w=500",
+    tag: "New",
   },
   {
-    id: 6,
-    title: "Modern Coffee Mug",
-    category: "Home",
-    price: 499,
-    rating: 4.4,
-    image:
-      "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=700&q=80",
+    name: "Office Chair",
+    price: "₹8,999",
+    image: "https://images.unsplash.com/photo-1580480055273-228ff5388ef8?w=500",
+    tag: "Featured",
   },
   {
-    id: 7,
-    title: "Leather Wallet",
-    category: "Accessories",
-    price: 799,
-    rating: 4.7,
-    image:
-      "https://images.unsplash.com/photo-1627123424574-724758594e93?auto=format&fit=crop&w=700&q=80",
+    name: "Mechanical Keyboard",
+    price: "₹4,499",
+    image: "https://images.unsplash.com/photo-1587829741301-dc798b83add3?w=500",
+    tag: "Popular",
   },
   {
-    id: 8,
-    title: "Minimal Desk Lamp",
-    category: "Home",
-    price: 1299,
-    rating: 4.6,
-    image:
-      "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?auto=format&fit=crop&w=700&q=80",
+    name: "DSLR Camera",
+    price: "₹54,999",
+    image: "https://images.unsplash.com/photo-1516035069371-29a1b244cc32?w=500",
+    tag: "Featured",
   },
 ];
 
-const Products = () => {
-  const { navigate } = useAuthHook();
+const navItems = [
+  { label: "Home", icon: "⌂", active: true },
+  { label: "Products", icon: "▦" },
+  { label: "Add Product", icon: "+" },
+  { label: "Profile", icon: "♙" },
+  { label: "Logout", icon: "↪" },
+];
+
+export default function ProductsPage() {
+
+  const {navigate} = useAuthHook()
+
 
   return (
-    <div className="min-h-screen" style={{ backgroundColor: "var(--bg-main)" }}>
-      {/* ================= HEADER ================= */}
-      <header
-        className="border-b"
+    <div
+      className="min-h-screen flex"
+      style={{
+        backgroundColor: "var(--bg-main)",
+        color: "var(--text-primary)",
+      }}
+    >
+      {/* ================= SIDEBAR ================= */}
+      <aside
+        className="fixed left-0 top-0 h-screen w-[220px] px-4 py-5 flex flex-col"
         style={{
-          backgroundColor: "var(--bg-surface)",
-          borderColor: "var(--border)",
+          backgroundColor: "var(--bg-dark)",
+          color: "var(--text-white)",
         }}
       >
-        <button
-          onClick={() => navigate("/")}
-          type="button"
-          className="fixed z-[9999] bottom-4 right-2 px-5 py-2.5 rounded-xl text-xs cursor-pointer
-             shadow-[0_8px_25px_rgba(6,78,59,0.25)]
-             hover:shadow-[0_8px_30px_rgba(6,78,59,0.45)]
-             transition-all duration-200 hover:scale-105"
-          style={{
-            backgroundColor: "var(--primary)",
-            color: "var(--text-white)",
-          }}
-        >
-          ← Back To Home
-        </button>
-        <div className="max-w-7xl mx-auto px-6 md:px-10">
-          {/* Top Header */}
-          <div className="h-[72px] flex items-center justify-between gap-5">
-            {/* Logo */}
-            <div className="flex items-center gap-3 shrink-0">
-              <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center"
-                style={{ backgroundColor: "var(--primary)" }}
-              >
-                <ShoppingCart
-                  size={19}
-                  style={{ color: "var(--text-white)" }}
-                />
-              </div>
-
-              <span
-                className="text-xl font-bold"
-                style={{ color: "var(--text-primary)" }}
-              >
-                ShopNest
-              </span>
-            </div>
-
-            {/* Search */}
-            <div className="hidden md:block w-full max-w-xl">
-              <div className="relative">
-                <Search
-                  size={19}
-                  className="absolute left-4 top-1/2 -translate-y-1/2"
-                  style={{ color: "var(--text-muted)" }}
-                />
-
-                <input
-                  type="text"
-                  placeholder="Search products..."
-                  className="w-full h-11 rounded-xl pl-11 pr-4 outline-none text-sm"
-                  style={{
-                    backgroundColor: "var(--bg-soft)",
-                    border: "1px solid var(--border)",
-                    color: "var(--text-primary)",
-                  }}
-                />
-              </div>
-            </div>
-
-            {/* Cart */}
-            <button
-              className="w-10 h-10 rounded-xl flex items-center justify-center"
-              style={{
-                backgroundColor: "var(--bg-soft)",
-                color: "var(--primary)",
-              }}
-            >
-              <ShoppingCart size={20} />
-            </button>
+        {/* Logo */}
+        <div className="px-2 mb-8 flex items-center gap-2.5">
+          <div
+            className="w-8 h-8 rounded-lg flex items-center justify-center text-sm font-bold"
+            style={{
+              backgroundColor: "var(--accent)",
+              color: "var(--primary)",
+            }}
+          >
+            S
           </div>
 
-          {/* Mobile Search */}
-          <div className="md:hidden pb-4">
-            <div className="relative">
-              <Search
-                size={18}
-                className="absolute left-4 top-1/2 -translate-y-1/2"
-                style={{ color: "var(--text-muted)" }}
-              />
+          <span className="font-bold tracking-tight text-base">ShopNest</span>
+        </div>
+
+        {/* Navigation */}
+        <AsideNavigate />
+
+        {/* User */}
+        <div
+          className="mt-auto pt-5 border-t flex items-center gap-3"
+          style={{
+            borderColor: "rgba(255,255,255,.1)",
+          }}
+        >
+          <div
+            className="w-9 h-9 rounded-full flex items-center justify-center text-sm"
+            style={{
+              backgroundColor: "var(--bg-surface)",
+              color: "var(--primary)",
+            }}
+          >
+            👤
+          </div>
+
+          <div className="min-w-0">
+            <p className="text-xs font-semibold truncate">Mayur Bairagi</p>
+
+            <p className="text-[10px] text-white/45 truncate">Admin</p>
+          </div>
+        </div>
+      </aside>
+
+      {/* ================= MAIN ================= */}
+      <main className="ml-[220px] flex-1 p-7">
+        {/* ================= HEADER ================= */}
+        <header className="flex items-center justify-between mb-8">
+          {/* Heading */}
+          <div>
+            <h1 className="text-2xl font-bold tracking-tight">Products</h1>
+
+            <p
+              className="text-sm mt-1"
+              style={{
+                color: "var(--text-secondary)",
+              }}
+            >
+              Explore our latest collection
+            </p>
+          </div>
+
+          {/* Header Right */}
+          <div className="flex items-center gap-5">
+            {/* Search */}
+            <div
+              className="w-[280px] h-10 rounded-lg flex items-center px-3.5 gap-2.5"
+              style={{
+                backgroundColor: "var(--bg-surface)",
+                border: "1px solid var(--border)",
+              }}
+            >
+              <span
+                className="text-sm"
+                style={{
+                  color: "var(--text-muted)",
+                }}
+              >
+                ⌕
+              </span>
 
               <input
                 type="text"
                 placeholder="Search products..."
-                className="w-full h-11 rounded-xl pl-11 pr-4 outline-none text-sm"
+                className="outline-none bg-transparent w-full text-sm"
                 style={{
-                  backgroundColor: "var(--bg-soft)",
-                  border: "1px solid var(--border)",
+                  color: "var(--text-primary)",
                 }}
               />
             </div>
-          </div>
-        </div>
-      </header>
 
-      {/* ================= MAIN ================= */}
-      <main className="max-w-7xl mx-auto px-6 md:px-10 py-10">
-        {/* Heading */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-5 mb-8">
-          <div>
-            <p
-              className="text-sm font-semibold"
-              style={{ color: "var(--primary-light)" }}
-            >
-              SHOP COLLECTION
-            </p>
-
-            <h1
-              className="mt-2 text-3xl md:text-4xl font-bold"
-              style={{ color: "var(--text-primary)" }}
-            >
-              Explore Products
-            </h1>
-
-            <p
-              className="mt-2 text-sm"
-              style={{ color: "var(--text-secondary)" }}
-            >
-              Discover products picked for your everyday needs.
-            </p>
-          </div>
-
-          {/* Filter */}
-          <button
-            className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-sm font-semibold"
-            style={{
-              backgroundColor: "var(--bg-surface)",
-              color: "var(--text-primary)",
-              border: "1px solid var(--border)",
-            }}
-          >
-            <SlidersHorizontal size={17} />
-            Filters
-          </button>
-        </div>
-
-        {/* ================= CATEGORIES ================= */}
-        <div className="flex gap-3 overflow-x-auto pb-2 mb-10">
-          {[
-            "All",
-            "Electronics",
-            "Fashion",
-            "Footwear",
-            "Home",
-            "Accessories",
-          ].map((category, index) => (
+            {/* Notification */}
             <button
-              key={category}
-              className="px-5 py-2.5 rounded-full text-sm font-medium whitespace-nowrap"
+              className="text-lg transition-opacity hover:opacity-70"
               style={{
-                backgroundColor:
-                  index === 0 ? "var(--primary)" : "var(--bg-surface)",
-
-                color:
-                  index === 0 ? "var(--text-white)" : "var(--text-secondary)",
-
-                border:
-                  index === 0
-                    ? "1px solid var(--primary)"
-                    : "1px solid var(--border)",
+                color: "var(--text-secondary)",
               }}
             >
-              {category}
+              ♧
             </button>
-          ))}
-        </div>
 
-        {/* ================= PRODUCTS ================= */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((product) => (
-            <div
-              key={product.id}
-              className="group rounded-2xl overflow-hidden bg-white transition-all duration-300 hover:-translate-y-1"
+            {/* Cart */}
+            <button
+              className="text-lg transition-opacity hover:opacity-70"
               style={{
+                color: "var(--primary)",
+              }}
+            >
+              🛒
+            </button>
+
+            {/* Add Product */}
+            <button
+            onClick={() => navigate("/addProduct")}
+              className="h-10 px-5 rounded-lg flex items-center gap-2 text-sm font-semibold transition-all hover:opacity-90"
+              style={{
+                backgroundColor: "var(--btn-primary)",
+                color: "var(--text-white)",
+                boxShadow: "var(--shadow-sm)",
+              }}
+            >
+              <span className="text-lg leading-none">+</span>
+              Add Product
+            </button>
+          </div>
+        </header>
+
+        {/* ================= PRODUCT GRID ================= */}
+        <section className="grid grid-cols-3 gap-5">
+          {products.map((product, index) => (
+            <div
+              key={product.name}
+              className="rounded-xl p-3.5 transition-all duration-200 hover:-translate-y-1"
+              style={{
+                backgroundColor: "var(--bg-surface)",
                 border: "1px solid var(--border)",
                 boxShadow: "var(--shadow-sm)",
               }}
             >
-              {/* Image */}
+              {/* ================= IMAGE ================= */}
               <div
-                className="relative h-[250px] overflow-hidden"
-                style={{ backgroundColor: "var(--bg-soft)" }}
+                className="relative h-[180px] rounded-lg overflow-hidden flex items-center justify-center"
+                style={{
+                  backgroundColor: "var(--bg-soft)",
+                }}
               >
-                <img
-                  src={product.image}
-                  alt={product.title}
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                />
-
-                {/* Wishlist */}
-                <button
-                  className="absolute top-4 right-4 w-9 h-9 rounded-full flex items-center justify-center bg-white/90 backdrop-blur"
-                  style={{ color: "var(--text-secondary)" }}
-                >
-                  <Heart size={17} />
-                </button>
-
-                {/* Category */}
+                {/* Tag */}
                 <span
-                  className="absolute bottom-4 left-4 px-3 py-1.5 rounded-full text-xs font-medium"
+                  className="absolute top-3 left-3 z-10 px-2.5 py-1 rounded-md text-[10px] font-semibold"
                   style={{
-                    backgroundColor: "rgba(255,255,255,.92)",
-                    color: "var(--primary)",
+                    backgroundColor:
+                      index % 3 === 1 ? "var(--warning)" : "var(--primary)",
+
+                    color: "var(--text-white)",
                   }}
                 >
-                  {product.category}
+                  {product.tag}
                 </span>
+
+                {/* Product Image */}
+                <img
+                  src={product.image}
+                  alt={product.name}
+                  className="w-full h-full object-contain mix-blend-multiply"
+                />
               </div>
 
-              {/* Content */}
-              <div className="p-5">
-                <h3
-                  className="font-semibold text-[16px] line-clamp-1"
-                  style={{ color: "var(--text-primary)" }}
-                >
-                  {product.title}
+              {/* ================= DETAILS ================= */}
+              <div className="px-1 pt-3">
+                {/* Product Name */}
+                <h3 className="text-sm font-semibold truncate">
+                  {product.name}
                 </h3>
 
-                {/* Rating */}
-                <div className="flex items-center gap-1.5 mt-2">
-                  <Star
-                    size={15}
-                    fill="currentColor"
-                    style={{ color: "var(--warning)" }}
+                {/* Price */}
+                <p
+                  className="text-sm font-bold mt-1.5"
+                  style={{
+                    color: "var(--text-primary)",
+                  }}
+                >
+                  {product.price}
+                </p>
+
+                {/* Stock */}
+                <div className="flex items-center gap-1.5 mt-1.5">
+                  <span
+                    className="w-2 h-2 rounded-full"
+                    style={{
+                      backgroundColor: "var(--success)",
+                    }}
                   />
 
                   <span
-                    className="text-xs font-medium"
-                    style={{ color: "var(--text-secondary)" }}
+                    className="text-xs"
+                    style={{
+                      color: "var(--success)",
+                    }}
                   >
-                    {product.rating}
+                    In Stock
                   </span>
                 </div>
 
-                {/* Price */}
-                <div className="flex items-center justify-between mt-5">
-                  <span
-                    className="text-xl font-bold"
-                    style={{ color: "var(--primary)" }}
-                  >
-                    ₹{product.price.toLocaleString("en-IN")}
-                  </span>
-
+                {/* ================= BUTTONS ================= */}
+                <div className="grid grid-cols-2 gap-2.5 mt-3">
+                  {/* Edit */}
                   <button
-                    className="w-10 h-10 rounded-xl flex items-center justify-center transition"
+                    className="h-8 rounded-lg text-xs font-semibold transition-all hover:opacity-90"
                     style={{
                       backgroundColor: "var(--primary)",
                       color: "var(--text-white)",
                     }}
                   >
-                    <ShoppingCart size={18} />
+                    Edit
+                  </button>
+
+                  {/* Delete */}
+                  <button
+                    className="h-8 rounded-lg text-xs font-semibold transition-all hover:opacity-90"
+                    style={{
+                      backgroundColor: "var(--danger-bg)",
+                      color: "var(--danger)",
+                    }}
+                  >
+                    Delete
                   </button>
                 </div>
               </div>
             </div>
           ))}
-        </div>
+        </section>
       </main>
     </div>
   );
-};
-
-export default Products;
+}

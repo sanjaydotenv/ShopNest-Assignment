@@ -116,20 +116,11 @@ const Login = () => {
           </div>
 
           {/* Forgot Password */}
-          <div className="flex justify-end">
-            <button
-              type="button"
-              className="text-sm font-medium"
-              style={{ color: "var(--primary-light)" }}
-            >
-              Forgot Password?
-            </button>
-          </div>
 
           {/* Login Button */}
           <button
             type="button"
-            className="w-full h-[53px] rounded-xl text-white font-semibold transition"
+            className="w-full h-[53px] mt-5 rounded-xl text-white font-semibold transition"
             style={{
               backgroundColor: "var(--btn-primary)",
               boxShadow: "var(--shadow-sm)",
@@ -146,7 +137,7 @@ const Login = () => {
         >
           Don't have an account?{" "}
           <span
-            onClick={() => navigate("/")}
+            onClick={() => navigate("/auth")}
             className="font-semibold cursor-pointer"
             style={{ color: "var(--primary-light)" }}
           >

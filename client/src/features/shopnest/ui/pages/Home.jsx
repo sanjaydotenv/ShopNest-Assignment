@@ -194,7 +194,7 @@ const Home = () => {
             </div>
 
             {/* Floating Text */}
-            <div className="absolute right-[75px] top-[100px] rotate-[-8deg]">
+            <div className="absolute right-[75px] top-[100px] rotate-[-8deg] opacity-80">
               <p className="text-white text-sm font-medium">Better Products</p>
 
               <p className="text-white text-sm font-medium">Better Living</p>

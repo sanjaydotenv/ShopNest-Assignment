@@ -7,6 +7,7 @@ import MainLayout from "../layouts/MainLayout";
 import Home from "../features/shopnest/ui/pages/Home";
 import About from "../features/shopnest/ui/pages/About";
 import Products from "../features/shopnest/ui/pages/Products";
+import AddProduct from "../features/shopnest/ui/pages/AddProduct";
 
 const App = () => {
   const router = createBrowserRouter([
@@ -39,6 +40,10 @@ const App = () => {
         {
           path: "products",
           element: <Products />,
+        },
+        {
+          path: "addProduct",
+          element: <AddProduct />,
         },
       ],
     },

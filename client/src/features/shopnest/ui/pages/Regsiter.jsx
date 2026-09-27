@@ -190,7 +190,7 @@ const Register = () => {
         >
           Already have an account?{" "}
           <span
-            onClick={() => navigate("/login")}
+            onClick={() => navigate("/auth/login")}
             className="font-semibold cursor-pointer"
             style={{ color: "var(--primary-light)" }}
           >
