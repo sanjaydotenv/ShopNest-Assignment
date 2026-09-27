@@ -1,6 +1,22 @@
+import { useRef } from "react";
+import { useProductHook } from "../../hooks/productHook";
 import AsideNavigate from "../components/AsideNavigate";
 
 const AddProduct = () => {
+  const imgRef = useRef();
+
+  const {
+    handleCreateProduct,
+    handleSubmit,
+    errors,
+    register,
+    handleImageChange,
+  } = useProductHook();
+
+  const handleImageInput = () => {
+    imgRef.current.click();
+  };
+
   return (
     <div
       className="min-h-screen flex"
@@ -87,11 +103,14 @@ const AddProduct = () => {
               boxShadow: "var(--shadow-sm)",
             }}
           >
-            <form className="space-y-5">
+            <form
+              onSubmit={handleSubmit(handleCreateProduct)}
+              className="space-y-5"
+            >
               {/* Product Name */}
               <div>
                 <label className="block text-sm font-medium mb-2">
-                  Product Name
+                  Product Title
                   <span
                     className="ml-1"
                     style={{
@@ -103,8 +122,11 @@ const AddProduct = () => {
                 </label>
 
                 <input
+                  {...register("title", {
+                    required: "Product title is required",
+                  })}
                   type="text"
-                  placeholder="Enter product name"
+                  placeholder="Enter product title"
                   className="w-full h-10 px-3 rounded-lg outline-none text-sm transition-all"
                   style={{
                     backgroundColor: "var(--bg-surface)",
@@ -112,6 +134,11 @@ const AddProduct = () => {
                     color: "var(--text-primary)",
                   }}
                 />
+                {errors.title && (
+                  <p className="text-red-700 text-sm mt-2 ml-2">
+                    {errors.title.message}
+                  </p>
+                )}
               </div>
 
               {/* Description */}
@@ -133,6 +160,9 @@ const AddProduct = () => {
                   </label>
 
                   <input
+                    {...register("price", {
+                      required: "Product price is required",
+                    })}
                     type="number"
                     placeholder="Enter price"
                     className="w-full h-10 px-3 rounded-lg outline-none text-sm"
@@ -142,6 +172,11 @@ const AddProduct = () => {
                       color: "var(--text-primary)",
                     }}
                   />
+                  {errors.price && (
+                    <p className="text-red-700 text-sm mt-2 ml-2">
+                      {errors.price.message}
+                    </p>
+                  )}
                 </div>
 
                 {/* Stock */}
@@ -162,6 +197,7 @@ const AddProduct = () => {
                 </label>
 
                 <div
+                  onClick={handleImageInput}
                   className="h-[150px] rounded-lg flex flex-col items-center justify-center cursor-pointer transition-all"
                   style={{
                     backgroundColor: "var(--bg-surface)",
@@ -177,6 +213,13 @@ const AddProduct = () => {
                   >
                     ▧
                   </div>
+                  <input
+                    onChange={handleImageChange}
+                    ref={imgRef}
+                    hidden
+                    type="file"
+                    accept="image/png,image/jpeg,image/jpg,image/webp"
+                  />
 
                   <p className="text-sm font-medium">Click to upload images</p>
 
@@ -189,6 +232,37 @@ const AddProduct = () => {
                     or drag and drop
                   </p>
                 </div>
+                {errors.image && (
+                  <p className="text-red-700 text-sm mt-2 ml-2">
+                    {errors.image.message}
+                  </p>
+                )}
+              </div>
+
+              <div className="max-w-[1050px] flex mt-10 gap-3">
+                <button
+                  type="button"
+                  className="h-10 px-5 rounded-lg text-sm font-medium transition-all hover:opacity-80"
+                  style={{
+                    backgroundColor: "var(--bg-surface)",
+                    color: "var(--text-secondary)",
+                    border: "1px solid var(--border)",
+                  }}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="submit"
+                  className="h-10 px-6 rounded-lg text-sm font-semibold transition-all hover:opacity-90"
+                  style={{
+                    backgroundColor: "var(--btn-primary)",
+                    color: "var(--text-white)",
+                    boxShadow: "var(--shadow-sm)",
+                  }}
+                >
+                  Add Product
+                </button>
               </div>
             </form>
           </div>
@@ -264,31 +338,6 @@ const AddProduct = () => {
         </div>
 
         {/* ================= ACTION BUTTONS ================= */}
-        <div className="max-w-[1050px] flex mt-10 gap-3">
-          <button
-            type="button"
-            className="h-10 px-5 rounded-lg text-sm font-medium transition-all hover:opacity-80"
-            style={{
-              backgroundColor: "var(--bg-surface)",
-              color: "var(--text-secondary)",
-              border: "1px solid var(--border)",
-            }}
-          >
-            Cancel
-          </button>
-
-          <button
-            type="button"
-            className="h-10 px-6 rounded-lg text-sm font-semibold transition-all hover:opacity-90"
-            style={{
-              backgroundColor: "var(--btn-primary)",
-              color: "var(--text-white)",
-              boxShadow: "var(--shadow-sm)",
-            }}
-          >
-            Add Product
-          </button>
-        </div>
       </main>
     </div>
   );
