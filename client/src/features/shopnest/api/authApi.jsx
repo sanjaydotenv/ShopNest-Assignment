@@ -5,3 +5,9 @@ export const registerAPI = async (data) => {
 
   return registerResponse;
 };
+
+export const loginAPI = async (data) => {
+  const loginResponse = await axiosInstance.post("/api/auth/login", data);
+
+  return loginResponse;
+};

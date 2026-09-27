@@ -2,7 +2,7 @@ import { User, Mail, LockKeyhole } from "lucide-react";
 import { useAuthHook } from "../../hooks/authHook";
 
 const Register = () => {
-  const { navigate, register, handleSubmit, errors, handleChange } =
+  const { navigate, register, handleSubmit, errors, handleChangeRegister } =
     useAuthHook();
 
   return (
@@ -58,7 +58,7 @@ const Register = () => {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit(handleChange)} className="space-y-5">
+        <form onSubmit={handleSubmit(handleChangeRegister)} className="space-y-5">
           {/* ================= FULL NAME ================= */}
 
           <div>

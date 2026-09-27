@@ -1,8 +1,8 @@
 import { useNavigate } from "react-router";
 import { useForm } from "react-hook-form";
-import { registerAPI } from "../api/authApi";
+import { loginAPI, registerAPI } from "../api/authApi";
 import { useDispatch } from "react-redux";
-import { registerUser } from "../state/authSlice";
+import { registerUser, loginUser } from "../state/authSlice";
 
 export const useAuthHook = () => {
   const navigate = useNavigate();
@@ -14,12 +14,27 @@ export const useAuthHook = () => {
     formState: { errors },
   } = useForm();
 
-  const handleChange = async (data) => {
+  const handleChangeRegister = async (data) => {
     const response = await registerAPI(data);
 
     dispatch(registerUser(response.data.data));
-    navigate("/products")
+    navigate("/products");
   };
 
-  return { navigate, handleSubmit, register, errors, handleChange, dispatch };
+  const handleChangeLogin = async (data) => {
+    const response = await loginAPI(data);
+
+    dispatch(loginUser(response.data.data));
+    navigate("/products");
+  };
+
+  return {
+    navigate,
+    handleSubmit,
+    register,
+    errors,
+    handleChangeRegister,
+    dispatch,
+    handleChangeLogin,
+  };
 };

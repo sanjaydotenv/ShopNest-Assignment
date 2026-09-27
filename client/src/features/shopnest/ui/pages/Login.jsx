@@ -2,7 +2,8 @@ import { Mail, LockKeyhole } from "lucide-react";
 import { useAuthHook } from "../../hooks/authHook";
 
 const Login = () => {
-  const { navigate } = useAuthHook();
+  const { navigate, handleSubmit, errors, register, handleChangeLogin } =
+    useAuthHook();
 
   return (
     <div
@@ -58,7 +59,7 @@ const Login = () => {
         </div>
 
         {/* Form */}
-        <form className="space-y-5">
+        <form onSubmit={handleSubmit(handleChangeLogin)} className="space-y-5">
           {/* Email */}
           <div>
             <label
@@ -76,6 +77,9 @@ const Login = () => {
               />
 
               <input
+                {...register("email", {
+                  required: "Email address is required",
+                })}
                 type="email"
                 placeholder="Enter your email"
                 className="w-full h-[52px] rounded-xl bg-white pl-12 pr-4 outline-none transition"
@@ -84,6 +88,14 @@ const Login = () => {
                   color: "var(--text-primary)",
                 }}
               />
+              {errors.email && (
+                <p
+                  className="text-xs mt-1.5"
+                  style={{ color: "var(--danger)" }}
+                >
+                  {errors.email.message}
+                </p>
+              )}
             </div>
           </div>
 
@@ -104,6 +116,9 @@ const Login = () => {
               />
 
               <input
+                {...register("password", {
+                  required: "Password is required",
+                })}
                 type="password"
                 placeholder="Enter your password"
                 className="w-full h-[52px] rounded-xl bg-white pl-12 pr-4 outline-none transition"
@@ -112,15 +127,23 @@ const Login = () => {
                   color: "var(--text-primary)",
                 }}
               />
+              {errors.password && (
+                <p
+                  className="text-xs mt-1.5"
+                  style={{ color: "var(--danger)" }}
+                >
+                  {errors.password.message}
+                </p>
+              )}
             </div>
           </div>
 
           {/* Forgot Password */}
 
           {/* Login Button */}
-          <button
-            type="button"
-            className="w-full h-[53px] mt-5 rounded-xl text-white font-semibold transition"
+           <button
+            type="submit"
+            className="w-full h-[53px] rounded-xl text-white font-semibold cursor-pointer active:scale-110 transition duration-75"
             style={{
               backgroundColor: "var(--btn-primary)",
               boxShadow: "var(--shadow-sm)",
