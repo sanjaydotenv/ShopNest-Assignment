@@ -11,13 +11,11 @@ import AddProduct from "../features/shopnest/ui/pages/AddProduct";
 import EditProduct from "../features/shopnest/ui/pages/EditProduct";
 import Profile from "../features/shopnest/ui/pages/Profile";
 import { refreshToken } from "../features/shopnest/api/authApi";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { hydrateUser } from "../features/shopnest/state/authSlice";
 
 const App = () => {
   const dispatch = useDispatch();
-  const data = useSelector((state) => state.auth);
-  console.log(data);
 
   const hydrate = async () => {
     const response = await refreshToken();

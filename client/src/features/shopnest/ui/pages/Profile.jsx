@@ -1,11 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router";
 import AsideNavigate from "../components/AsideNavigate";
+import { useSelector } from "react-redux";
 
 
 
 const Profile = () => {
   const navigate = useNavigate();
+
+  const {user} = useSelector(state => state.auth)
 
   return (
     <div
@@ -79,7 +82,7 @@ const Profile = () => {
 
             <div>
               <h2 className="text-lg font-bold">
-                Mayur Bairagi
+                {user?.user?.name}
               </h2>
 
               <p
@@ -88,7 +91,7 @@ const Profile = () => {
                   color: "var(--text-secondary)",
                 }}
               >
-                mayur@example.com
+               {user?.user?.email}
               </p>
             </div>
           </div>
@@ -117,7 +120,7 @@ const Profile = () => {
               </span>
 
               <span className="text-sm font-medium">
-                Mayur Bairagi
+               {user?.user?.name}
               </span>
             </div>
 
@@ -139,37 +142,13 @@ const Profile = () => {
               </span>
 
               <span className="text-sm font-medium">
-                mayur@example.com
+                {user?.user?.email}
               </span>
             </div>
 
             {/* Role */}
 
-            <div
-              className="flex items-center justify-between py-3.5 border-b"
-              style={{
-                borderColor: "var(--border)",
-              }}
-            >
-              <span
-                className="text-sm"
-                style={{
-                  color: "var(--text-secondary)",
-                }}
-              >
-                Role
-              </span>
-
-              <span
-                className="text-xs font-semibold px-2.5 py-1 rounded-md"
-                style={{
-                  backgroundColor: "var(--success-bg)",
-                  color: "var(--success)",
-                }}
-              >
-                Admin
-              </span>
-            </div>
+    
 
             {/* Member Since */}
 
@@ -184,7 +163,7 @@ const Profile = () => {
               </span>
 
               <span className="text-sm font-medium">
-                Sep 2025
+                Soon
               </span>
             </div>
           </div>
@@ -195,7 +174,6 @@ const Profile = () => {
 
           <button
             type="button"
-            onClick={() => navigate("/profile/edit")}
             className="w-full h-10 mt-5 rounded-lg text-sm font-semibold cursor-pointer transition-all duration-200 hover:opacity-90"
             style={{
               backgroundColor: "var(--btn-primary)",
