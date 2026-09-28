@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { useProductHook } from "../../hooks/productHook";
 import AsideNavigate from "../components/AsideNavigate";
 
@@ -11,6 +11,11 @@ const AddProduct = () => {
     errors,
     register,
     handleImageChange,
+    setProductPrice,
+    setProductTitle,
+    productPrice,
+    productTitle,
+    imagePreview,
   } = useProductHook();
 
   const handleImageInput = () => {
@@ -122,6 +127,7 @@ const AddProduct = () => {
                 </label>
 
                 <input
+                  onInput={(e) => setProductTitle(e.target.value)}
                   {...register("title", {
                     required: "Product title is required",
                   })}
@@ -160,6 +166,7 @@ const AddProduct = () => {
                   </label>
 
                   <input
+                    onInput={(e) => setProductPrice(e.target.value)}
                     {...register("price", {
                       required: "Product price is required",
                     })}
@@ -286,13 +293,14 @@ const AddProduct = () => {
                 backgroundColor: "var(--bg-soft)",
               }}
             >
+              <img className={`${imagePreview ? "h-[100%] w-[100%] object-contain" : ""}`} src={imagePreview} alt="" />
               <div
-                className="text-4xl"
+                className="text-4xl absolute"
                 style={{
                   color: "var(--text-muted)",
                 }}
               >
-                ▧
+                {imagePreview ? "" : "▧"}
               </div>
             </div>
 
@@ -304,7 +312,7 @@ const AddProduct = () => {
                   color: "var(--text-primary)",
                 }}
               >
-                Product name
+                {productTitle ? productTitle : "Product name"}
               </p>
 
               <p
@@ -313,7 +321,7 @@ const AddProduct = () => {
                   color: "var(--text-primary)",
                 }}
               >
-                ₹0
+                ₹{productPrice ? productPrice : "0"}
               </p>
 
               <div className="flex items-center gap-1.5 mt-2">

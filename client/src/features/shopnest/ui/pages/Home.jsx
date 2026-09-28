@@ -10,6 +10,8 @@ import { useAuthHook } from "../../hooks/authHook";
 const Home = () => {
   const { navigate } = useAuthHook();
 
+
+
   return (
     <div
       className="min-h-screen "

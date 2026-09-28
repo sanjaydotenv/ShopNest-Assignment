@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAuthHook } from "../../hooks/authHook";
 import AsideNavigate from "../components/AsideNavigate";
 import DeleteProductModal from "../components/DeleteProductModal ";
@@ -6,6 +6,7 @@ import { useSelector } from "react-redux";
 import { Navigate } from "react-router";
 import { toast } from "react-toastify";
 import ProductSkeleton from "../components/ProductSkeleton ";
+import { useProductHook } from "../../hooks/productHook";
 
 const products = [
   {
@@ -59,9 +60,18 @@ const products = [
 ];
 
 export default function ProductsPage() {
-  const { navigate } = useAuthHook();
-  const { isAuthenticate, loading } = useSelector((state) => state.auth);
   const [isShow, setisShow] = useState(false);
+  const { isAuthenticate, loading } = useSelector((state) => state.auth);
+  const {allProducts} = useSelector((state) => state.product);
+
+
+  const { navigate } = useAuthHook();
+
+  const { handleAllProducts } = useProductHook();
+
+  useEffect(() => {
+    handleAllProducts();
+  }, []);
 
   if (loading) {
     return <ProductSkeleton />;
@@ -217,9 +227,9 @@ export default function ProductsPage() {
 
           {/* ================= PRODUCT GRID ================= */}
           <section className="grid grid-cols-3 gap-5">
-            {products.map((product, index) => (
+            {allProducts.map((product, index) => (
               <div
-                key={product.name}
+                key={product._id}
                 className="rounded-xl p-3.5 transition-all duration-200 hover:-translate-y-1"
                 style={{
                   backgroundColor: "var(--bg-surface)",
