@@ -82,6 +82,11 @@ export const useProductHook = () => {
 
   const handleProductUpdate = async (productID, data) => {
     try {
+      if (!productID) {
+        toast.error("Product ID is missing");
+        return false;
+      }
+
       setLoading(true);
 
       const formData = new FormData();
@@ -96,13 +101,26 @@ export const useProductHook = () => {
       await updateProductAPI(productID, formData, user.accessToken);
 
       toast.success("Product Updated Successfully");
+
+      await handleAllProducts();
+
+      reset();
+
+      setImageData(null);
+      setImagePreview(null);
+
+      return true;
     } catch (error) {
-      console.error("Update product error", error);
-      toast.error("Failed to update product");
+      console.error("Update product error:", error);
+
+      toast.error(error?.response?.data?.message || "Failed to update product");
+
+      return false;
     } finally {
       setLoading(false);
     }
   };
+
 
   return {
     register,
@@ -124,6 +142,6 @@ export const useProductHook = () => {
     setLoading,
     handleProductUpdate,
     setProductID,
-    productID
+    productID,
   };
 };

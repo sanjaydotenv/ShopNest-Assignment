@@ -12,7 +12,7 @@ const navItems = [
 ];
 
 const AsideNavigate = () => {
-  const { navigate } = useAuthHook();
+  const { navigate , handleLogout } = useAuthHook();
   const location = useLocation();
 
   const {user} = useSelector(state => state.auth)
@@ -59,6 +59,7 @@ const AsideNavigate = () => {
                 if (item.path) {
                   navigate(item.path);
                 }
+                handleLogout(item)
               }}
               className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-all duration-200 cursor-pointer"
               style={{

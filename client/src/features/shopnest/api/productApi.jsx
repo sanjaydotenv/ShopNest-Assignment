@@ -29,10 +29,14 @@ export const deleteProductAPI = async (productID, accessToken) => {
   });
 };
 
-export const updateProductAPI = async (ProductID, accessToken) => {
-  await axiosInstance.put(`/api/products/${productID}`, {
-    headers: {
-      Authorization: `Bearer ${accessToken}`,
+export const updateProductAPI = async (productID, formData, token) => {
+  return await axiosInstance.put(
+    `/api/products/${productID}`,
+    formData,
+    {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
     },
-  });
+  );
 };

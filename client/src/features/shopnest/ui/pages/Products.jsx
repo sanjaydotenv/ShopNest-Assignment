@@ -270,7 +270,7 @@ export default function ProductsPage() {
                 <div className="px-1 pt-3">
                   {/* Product Name */}
                   <h3 className="text-sm font-semibold truncate">
-                    {product?.name}
+                    {product?.title}
                   </h3>
 
                   {/* Price */}

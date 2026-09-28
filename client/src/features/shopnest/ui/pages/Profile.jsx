@@ -1,14 +1,18 @@
 import React from "react";
-import { useNavigate } from "react-router";
+import { Navigate, useNavigate } from "react-router";
 import AsideNavigate from "../components/AsideNavigate";
 import { useSelector } from "react-redux";
-
-
+import { toast } from "react-toastify";
 
 const Profile = () => {
   const navigate = useNavigate();
 
-  const {user} = useSelector(state => state.auth)
+  const { user, isAuthenticate } = useSelector((state) => state.auth);
+
+  if (!isAuthenticate) {
+    toast.warn("Please register Or login first");
+    return <Navigate to={"/"} />;
+  }
 
   return (
     <div
@@ -29,13 +33,10 @@ const Profile = () => {
       ====================================================== */}
 
       <main className="ml-[220px] flex-1 p-7">
-
         {/* Header */}
 
         <div className="mb-7">
-          <h1 className="text-2xl font-bold tracking-tight">
-            My Profile
-          </h1>
+          <h1 className="text-2xl font-bold tracking-tight">My Profile</h1>
 
           <p
             className="text-sm mt-1"
@@ -61,7 +62,8 @@ const Profile = () => {
         >
           {/* Profile Header */}
 
-          <div className="flex items-center gap-4 pb-6 border-b"
+          <div
+            className="flex items-center gap-4 pb-6 border-b"
             style={{
               borderColor: "var(--border)",
             }}
@@ -81,9 +83,7 @@ const Profile = () => {
             {/* Name */}
 
             <div>
-              <h2 className="text-lg font-bold">
-                {user?.user?.name}
-              </h2>
+              <h2 className="text-lg font-bold">{user?.user?.name}</h2>
 
               <p
                 className="text-sm mt-0.5"
@@ -91,7 +91,7 @@ const Profile = () => {
                   color: "var(--text-secondary)",
                 }}
               >
-               {user?.user?.email}
+                {user?.user?.email}
               </p>
             </div>
           </div>
@@ -101,7 +101,6 @@ const Profile = () => {
           ================================================== */}
 
           <div className="mt-5">
-
             {/* Name */}
 
             <div
@@ -119,9 +118,7 @@ const Profile = () => {
                 Name
               </span>
 
-              <span className="text-sm font-medium">
-               {user?.user?.name}
-              </span>
+              <span className="text-sm font-medium">{user?.user?.name}</span>
             </div>
 
             {/* Email */}
@@ -141,14 +138,10 @@ const Profile = () => {
                 Email
               </span>
 
-              <span className="text-sm font-medium">
-                {user?.user?.email}
-              </span>
+              <span className="text-sm font-medium">{user?.user?.email}</span>
             </div>
 
             {/* Role */}
-
-    
 
             {/* Member Since */}
 
@@ -162,9 +155,7 @@ const Profile = () => {
                 Member Since
               </span>
 
-              <span className="text-sm font-medium">
-                Soon
-              </span>
+              <span className="text-sm font-medium">Soon</span>
             </div>
           </div>
 

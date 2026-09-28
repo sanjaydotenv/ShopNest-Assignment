@@ -27,12 +27,8 @@ const EditProduct = () => {
 
   const prid = localStorage.getItem("prid");
 
-  // Find selected product
-  const foundProduct = allProducts?.find(
-    (product) => product._id === prid
-  );
+  const foundProduct = allProducts?.find((product) => product._id === prid);
 
-  // Agar product nahi mila to dummy product
   const pro = foundProduct || dummyProduct;
 
   const productNotFound = !foundProduct;
@@ -73,9 +69,7 @@ const EditProduct = () => {
             S
           </div>
 
-          <span className="font-bold tracking-tight text-base">
-            ShopNest
-          </span>
+          <span className="font-bold tracking-tight text-base">ShopNest</span>
         </div>
 
         <AsideNavigate />
@@ -97,26 +91,18 @@ const EditProduct = () => {
           </div>
 
           <div className="min-w-0">
-            <p className="text-xs font-semibold truncate">
-              Mayur Bairagi
-            </p>
+            <p className="text-xs font-semibold truncate">Mayur Bairagi</p>
 
-            <p className="text-[10px] text-white/45 truncate">
-              Admin
-            </p>
+            <p className="text-[10px] text-white/45 truncate">Admin</p>
           </div>
         </div>
       </aside>
-
-      {/* ================= MAIN ================= */}
 
       <main className="ml-[220px] flex-1 p-7">
         {/* Header */}
 
         <div className="mb-7">
-          <h1 className="text-2xl font-bold tracking-tight">
-            Edit Product
-          </h1>
+          <h1 className="text-2xl font-bold tracking-tight">Edit Product</h1>
 
           <p
             className="text-sm mt-1"
@@ -128,8 +114,6 @@ const EditProduct = () => {
           </p>
         </div>
 
-        {/* ================= PRODUCT NOT FOUND ================= */}
-
         {productNotFound && (
           <div
             className="mb-5 px-4 py-3 rounded-xl flex items-center justify-between"
@@ -140,9 +124,7 @@ const EditProduct = () => {
             }}
           >
             <div>
-              <p className="font-semibold text-sm">
-                Product not found
-              </p>
+              <p className="font-semibold text-sm">Product not found</p>
 
               <p className="text-xs mt-1 opacity-80">
                 The selected product could not be found in the product list.
@@ -163,11 +145,7 @@ const EditProduct = () => {
           </div>
         )}
 
-        {/* ================= CONTENT ================= */}
-
         <div className="grid grid-cols-[1fr_330px] gap-6 max-w-[1050px]">
-          {/* ================= FORM ================= */}
-
           <div
             className="rounded-xl p-5"
             style={{
@@ -176,16 +154,10 @@ const EditProduct = () => {
               boxShadow: "var(--shadow-sm)",
             }}
           >
-            <form
-              onSubmit={handleSubmit(onSubmit)}
-              className="space-y-5"
-            >
-              {/* Product Name */}
-
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
               <div>
                 <label className="block text-sm font-medium mb-2">
                   Product Name
-
                   <span
                     className="ml-1"
                     style={{
@@ -219,12 +191,9 @@ const EditProduct = () => {
                 )}
               </div>
 
-              {/* Price */}
-
               <div className="w-[50vw]">
                 <label className="block text-sm font-medium mb-2">
                   Price
-
                   <span
                     className="ml-1"
                     style={{
@@ -259,12 +228,9 @@ const EditProduct = () => {
                 )}
               </div>
 
-              {/* Images */}
-
               <div>
                 <label className="block text-sm font-medium mb-2">
                   Images
-
                   <span
                     className="ml-1"
                     style={{
@@ -276,8 +242,6 @@ const EditProduct = () => {
                 </label>
 
                 <div className="flex items-center gap-3">
-                  {/* Existing Image */}
-
                   <div
                     className="relative w-[72px] h-[72px] rounded-lg overflow-hidden"
                     style={{
@@ -311,8 +275,6 @@ const EditProduct = () => {
                     )}
                   </div>
 
-                  {/* Add More */}
-
                   <label
                     htmlFor="product-image"
                     className={`w-[72px] h-[72px] rounded-lg flex items-center justify-center text-2xl transition-all ${
@@ -327,7 +289,6 @@ const EditProduct = () => {
                     }}
                   >
                     +
-
                     <input
                       id="product-image"
                       type="file"
@@ -349,11 +310,7 @@ const EditProduct = () => {
                 </p>
               </div>
 
-              {/* Action Buttons */}
-
               <div className="flex justify-end gap-3 pt-2">
-                {/* Cancel */}
-
                 <button
                   type="button"
                   onClick={() => navigate("/Products")}
@@ -366,8 +323,6 @@ const EditProduct = () => {
                 >
                   Cancel
                 </button>
-
-                {/* Update */}
 
                 <button
                   type="submit"
@@ -396,8 +351,6 @@ const EditProduct = () => {
             </form>
           </div>
 
-          {/* ================= PRODUCT PREVIEW ================= */}
-
           <div
             className="rounded-xl p-4 h-fit sticky top-7"
             style={{
@@ -406,11 +359,7 @@ const EditProduct = () => {
               boxShadow: "var(--shadow-sm)",
             }}
           >
-            <h2 className="text-sm font-semibold mb-3">
-              Product Preview
-            </h2>
-
-            {/* Preview Image */}
+            <h2 className="text-sm font-semibold mb-3">Previous Product</h2>
 
             <div
               className="w-full h-[180px] rounded-lg overflow-hidden flex items-center justify-center"
@@ -436,12 +385,8 @@ const EditProduct = () => {
               )}
             </div>
 
-            {/* Preview Details */}
-
             <div className="mt-4">
-              <p className="text-sm font-semibold">
-                {pro.title}
-              </p>
+              <p className="text-sm font-semibold">{pro.title}</p>
 
               <p
                 className="text-sm font-bold mt-1"
@@ -449,8 +394,7 @@ const EditProduct = () => {
                   color: "var(--text-primary)",
                 }}
               >
-                ₹{" "}
-                {Number(pro.price || 0).toLocaleString("en-IN")}
+                ₹ {Number(pro.price || 0).toLocaleString("en-IN")}
               </p>
 
               <div className="flex items-center gap-1.5 mt-2">
@@ -466,9 +410,7 @@ const EditProduct = () => {
                 <span
                   className="text-xs"
                   style={{
-                    color: productNotFound
-                      ? "var(--danger)"
-                      : "var(--success)",
+                    color: productNotFound ? "var(--danger)" : "var(--success)",
                   }}
                 >
                   {productNotFound ? "Unavailable" : "In Stock"}

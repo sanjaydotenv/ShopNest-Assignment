@@ -15,18 +15,22 @@ const authSlice = createSlice({
       state.user = action.payload;
       state.isAuthenticate = true;
     },
-    loginUser: (state , action) => {
-      state.user = action.payload.user
-      state.accessToken = action.payload.accessToken
+    loginUser: (state, action) => {
+      state.user = action.payload.user;
+      state.accessToken = action.payload.accessToken;
     },
-    hydrateUser: (state , action) => {
-      state.user = action.payload
-      state.isAuthenticate = true
-      state.loading = false
-    }
+    hydrateUser: (state, action) => {
+      state.user = action.payload;
+      state.isAuthenticate = true;
+      state.loading = false;
+    },
+    logoutUser: (state) => {
+      ((state.isAuthenticate = false), (state.user = null));
+      state.accessToken = null;
+    },
   },
 });
 
-export const { registerUser , loginUser , hydrateUser } = authSlice.actions;
+export const { registerUser, loginUser, hydrateUser , logoutUser} = authSlice.actions;
 
 export default authSlice.reducer;
