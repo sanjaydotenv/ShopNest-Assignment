@@ -1,6 +1,7 @@
 import React from "react";
 import { useLocation } from "react-router";
 import { useAuthHook } from "../../hooks/authHook";
+import { useSelector } from "react-redux";
 
 const navItems = [
   { label: "Home", icon: "⌂", path: "/" },
@@ -13,6 +14,9 @@ const navItems = [
 const AsideNavigate = () => {
   const { navigate } = useAuthHook();
   const location = useLocation();
+
+  const {user} = useSelector(state => state.auth)
+
 
   return (
     <aside
@@ -101,7 +105,7 @@ const AsideNavigate = () => {
 
         <div className="min-w-0">
           <p className="text-xs font-semibold truncate">
-            Mayur Bairagi
+            {user?.user?.name}
           </p>
 
           <p className="text-[10px] text-white/45 truncate">

@@ -50,7 +50,7 @@ export const useProductHook = () => {
     await createProductAPI(formData, user.accessToken);
 
     reset();
-    toast.success("Product Create SuccessFully");
+    toast.success("Product Created Successfully");
     setLoading(false);
   };
 
