@@ -104,7 +104,9 @@ const DeleteProductModal = ({ status, id }) => {
           </button>
 
           <button
-            onClick={() => handleDeleteProduct(id)}
+            onClick={() => {
+              handleDeleteProduct(id);
+            }}
             type="button"
             className="h-9 rounded-lg text-xs font-semibold cursor-pointer transition-all hover:opacity-90"
             style={{

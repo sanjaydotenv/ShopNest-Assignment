@@ -1,20 +1,27 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { createProductAPI, deleteProductAPI, getAllProductsAPI } from "../api/productApi";
+import {
+  createProductAPI,
+  deleteProductAPI,
+  getAllProductsAPI,
+} from "../api/productApi";
 import { useDispatch, useSelector } from "react-redux";
 import { allProductsData } from "../state/productSlice";
+import { toast } from "react-toastify";
 
 export const useProductHook = () => {
   const [imageData, setImageData] = useState(null);
   const [productTitle, setProductTitle] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [imagePreview, setImagePreview] = useState(null);
+  const [isShow, setIsShow] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
 
-  console.log()
+  console.log();
 
   const {
     register,
@@ -31,14 +38,20 @@ export const useProductHook = () => {
   };
 
   const handleCreateProduct = async (data) => {
+
+    setLoading(true);
+
     const formData = new FormData();
 
     formData.append("title", data.title);
     formData.append("price", data.price);
     formData.append("image", imageData);
 
-    const response = await createProductAPI(formData, user.accessToken)
+    await createProductAPI(formData, user.accessToken);
+
     reset();
+    toast.success("Product Create SuccessFully");
+    setLoading(false);
   };
 
   // Fetch all products logic
@@ -52,8 +65,19 @@ export const useProductHook = () => {
   // Delete product logic
 
   const handleDeleteProduct = async (productID) => {
-    await deleteProductAPI(productID , user.accessToken)
-  }
+    try {
+      await deleteProductAPI(productID, user.accessToken);
+
+      setIsShow(false);
+
+      toast.success("Product Deleted");
+
+      handleAllProducts();
+    } catch (error) {
+      console.error("Delete product error:", error);
+      toast.error("Failed to delete product");
+    }
+  };
 
   return {
     register,
@@ -68,6 +92,10 @@ export const useProductHook = () => {
     productPrice,
     imagePreview,
     handleAllProducts,
-    handleDeleteProduct
+    handleDeleteProduct,
+    setIsShow,
+    isShow,
+    loading,
+    setLoading,
   };
 };

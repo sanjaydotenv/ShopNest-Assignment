@@ -16,6 +16,7 @@ const AddProduct = () => {
     productPrice,
     productTitle,
     imagePreview,
+    loading,
   } = useProductHook();
 
   const handleImageInput = () => {
@@ -246,29 +247,26 @@ const AddProduct = () => {
                 )}
               </div>
 
-              <div className="max-w-[1050px] flex mt-10 gap-3">
-                <button
-                  type="button"
-                  className="h-10 px-5 rounded-lg text-sm font-medium transition-all hover:opacity-80"
-                  style={{
-                    backgroundColor: "var(--bg-surface)",
-                    color: "var(--text-secondary)",
-                    border: "1px solid var(--border)",
-                  }}
-                >
-                  Cancel
-                </button>
-
+              <div className="flex gap-3">
+                {/* Add Product */}
                 <button
                   type="submit"
-                  className="h-10 px-6 rounded-lg text-sm font-semibold transition-all hover:opacity-90"
+                  disabled={loading}
+                  className="px-8 py-3 rounded-xl font-semibold cursor-pointer disabled:cursor-not-allowed"
                   style={{
-                    backgroundColor: "var(--btn-primary)",
+                    backgroundColor: "var(--primary)",
                     color: "var(--text-white)",
-                    boxShadow: "var(--shadow-sm)",
                   }}
                 >
-                  Add Product
+                  {loading ? (
+                    <span className="flex items-center justify-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-white animate-bounce [animation-delay:-0.3s]" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-white animate-bounce [animation-delay:-0.15s]" />
+                      <span className="w-1.5 h-1.5 rounded-full bg-white animate-bounce" />
+                    </span>
+                  ) : (
+                    "Add Product"
+                  )}
                 </button>
               </div>
             </form>
@@ -293,7 +291,11 @@ const AddProduct = () => {
                 backgroundColor: "var(--bg-soft)",
               }}
             >
-              <img className={`${imagePreview ? "h-[100%] w-[100%] object-contain" : ""}`} src={imagePreview} alt="" />
+              <img
+                className={`${imagePreview ? "h-[100%] w-[100%] object-contain" : ""}`}
+                src={imagePreview}
+                alt=""
+              />
               <div
                 className="text-4xl absolute"
                 style={{
