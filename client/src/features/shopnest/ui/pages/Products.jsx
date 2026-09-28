@@ -60,13 +60,15 @@ const products = [
 ];
 
 export default function ProductsPage() {
-  const [productID, setProductID] = useState(null);
   const { isAuthenticate, loading } = useSelector((state) => state.auth);
   const { allProducts } = useSelector((state) => state.product);
 
   const { navigate } = useAuthHook();
 
-  const { handleAllProducts, setIsShow, isShow } = useProductHook();
+  const { handleAllProducts, setIsShow, isShow, setProductID, productID } =
+    useProductHook();
+
+  localStorage.setItem("prid", productID);
 
   useEffect(() => {
     handleAllProducts();
@@ -304,7 +306,10 @@ export default function ProductsPage() {
                   <div className="grid grid-cols-2 gap-2.5 mt-3">
                     {/* Edit */}
                     <button
-                      onClick={() => navigate("/editProduct")}
+                      onClick={() => {
+                        setProductID(product._id);
+                        navigate("/editProduct");
+                      }}
                       className="h-8 rounded-lg text-xs font-semibold transition-all hover:opacity-90"
                       style={{
                         backgroundColor: "var(--primary)",

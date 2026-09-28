@@ -4,6 +4,7 @@ import {
   createProductAPI,
   deleteProductAPI,
   getAllProductsAPI,
+  updateProductAPI,
 } from "../api/productApi";
 import { useDispatch, useSelector } from "react-redux";
 import { allProductsData } from "../state/productSlice";
@@ -16,12 +17,11 @@ export const useProductHook = () => {
   const [imagePreview, setImagePreview] = useState(null);
   const [isShow, setIsShow] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [productID, setProductID] = useState(null);
 
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
-
-  console.log();
 
   const {
     register,
@@ -38,7 +38,6 @@ export const useProductHook = () => {
   };
 
   const handleCreateProduct = async (data) => {
-
     setLoading(true);
 
     const formData = new FormData();
@@ -79,6 +78,32 @@ export const useProductHook = () => {
     }
   };
 
+  // Update Product logic
+
+  const handleProductUpdate = async (productID, data) => {
+    try {
+      setLoading(true);
+
+      const formData = new FormData();
+
+      formData.append("title", data.title);
+      formData.append("price", data.price);
+
+      if (imageData) {
+        formData.append("image", imageData);
+      }
+
+      await updateProductAPI(productID, formData, user.accessToken);
+
+      toast.success("Product Updated Successfully");
+    } catch (error) {
+      console.error("Update product error", error);
+      toast.error("Failed to update product");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return {
     register,
     handleSubmit,
@@ -97,5 +122,8 @@ export const useProductHook = () => {
     isShow,
     loading,
     setLoading,
+    handleProductUpdate,
+    setProductID,
+    productID
   };
 };
