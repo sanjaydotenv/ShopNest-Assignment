@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { createProductAPI, getAllProductsAPI } from "../api/productApi";
+import { createProductAPI, deleteProductAPI, getAllProductsAPI } from "../api/productApi";
 import { useDispatch, useSelector } from "react-redux";
 import { allProductsData } from "../state/productSlice";
 
@@ -13,6 +13,8 @@ export const useProductHook = () => {
   const dispatch = useDispatch();
 
   const { user } = useSelector((state) => state.auth);
+
+  console.log()
 
   const {
     register,
@@ -34,10 +36,8 @@ export const useProductHook = () => {
     formData.append("title", data.title);
     formData.append("price", data.price);
     formData.append("image", imageData);
-    console.log(imageData);
 
-    const response = await createProductAPI(formData, user.accessToken);
-    console.log(response);
+    const response = await createProductAPI(formData, user.accessToken)
     reset();
   };
 
@@ -49,7 +49,11 @@ export const useProductHook = () => {
     dispatch(allProductsData(response.data.data.products));
   };
 
-  
+  // Delete product logic
+
+  const handleDeleteProduct = async (productID) => {
+    await deleteProductAPI(productID , user.accessToken)
+  }
 
   return {
     register,
@@ -64,5 +68,6 @@ export const useProductHook = () => {
     productPrice,
     imagePreview,
     handleAllProducts,
+    handleDeleteProduct
   };
 };

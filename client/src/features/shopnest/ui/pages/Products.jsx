@@ -61,6 +61,7 @@ const products = [
 
 export default function ProductsPage() {
   const [isShow, setisShow] = useState(false);
+  const [productID, setProductID] = useState(null)
   const { isAuthenticate, loading } = useSelector((state) => state.auth);
   const {allProducts} = useSelector((state) => state.product);
 
@@ -229,7 +230,7 @@ export default function ProductsPage() {
           <section className="grid grid-cols-3 gap-5">
             {allProducts.map((product, index) => (
               <div
-                key={product._id}
+                key={product?._id}
                 className="rounded-xl p-3.5 transition-all duration-200 hover:-translate-y-1"
                 style={{
                   backgroundColor: "var(--bg-surface)",
@@ -254,13 +255,13 @@ export default function ProductsPage() {
                       color: "var(--text-white)",
                     }}
                   >
-                    {product.tag}
+                    {product?.tag}
                   </span>
 
                   {/* Product Image */}
                   <img
-                    src={product.image}
-                    alt={product.name}
+                    src={product?.image}
+                    alt={product?.name}
                     className="w-full h-full object-contain mix-blend-multiply"
                   />
                 </div>
@@ -317,7 +318,10 @@ export default function ProductsPage() {
 
                     {/* Delete */}
                     <button
-                      onClick={() => setisShow((prev) => !prev)}
+                      onClick={() => {
+                        setProductID(product._id)
+                        setisShow((prev) => !prev)
+                      }}
                       className="h-8 rounded-lg text-xs font-semibold transition-all hover:opacity-90"
                       style={{
                         backgroundColor: "var(--danger-bg)",
@@ -334,7 +338,7 @@ export default function ProductsPage() {
         </main>
       </div>
 
-      {isShow ? <DeleteProductModal status={setisShow} /> : ""}
+      {isShow ? <DeleteProductModal id={productID} status={setisShow} /> : ""}
     </div>
   );
 }

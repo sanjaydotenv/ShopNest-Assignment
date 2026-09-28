@@ -1,6 +1,9 @@
 import React from "react";
+import { useProductHook } from "../../hooks/productHook";
 
-const DeleteProductModal = ({ status }) => {
+const DeleteProductModal = ({ status, id }) => {
+  const { handleDeleteProduct } = useProductHook();
+
   return (
     <div
       className="fixed inset-0 z-[9999] flex items-center justify-center p-4"
@@ -101,6 +104,7 @@ const DeleteProductModal = ({ status }) => {
           </button>
 
           <button
+            onClick={() => handleDeleteProduct(id)}
             type="button"
             className="h-9 rounded-lg text-xs font-semibold cursor-pointer transition-all hover:opacity-90"
             style={{
